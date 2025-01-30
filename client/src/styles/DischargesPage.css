@@ -35,8 +35,9 @@
 /* Pagination container */
 .pagination {
   display: flex;
-  flex-direction: column; /* Stack items per page selector above page controls */
+  flex-direction: row; /* Stack items per page selector above page controls */
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 20px;
 }

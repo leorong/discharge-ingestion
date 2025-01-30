@@ -48,16 +48,6 @@ export default function DischargesPage() {
 
         {/* Pagination UI */}
         <div className="pagination">
-          {/* Items Per Page Selector */}
-          <div className="items-per-page">
-            <label>Items per page:</label>
-            <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-            </select>
-          </div>
-
           {/* Page Controls */}
           <div className="page-controls">
             <button onClick={() => setPage(page - 1)} disabled={page === 1}>
@@ -67,6 +57,16 @@ export default function DischargesPage() {
             <button onClick={() => setPage(page + 1)} disabled={page >= totalPages}>
               Next ➡
             </button>
+          </div>
+          
+          {/* Items Per Page Selector */}
+          <div className="items-per-page">
+            <label>Items per page:</label>
+            <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+            </select>
           </div>
         </div>
 
