@@ -89,8 +89,7 @@ app.post("/api/parse", upload.single("file"), async (req, res) => {
       console.error("Failed to parse JSON. OpenAI Response:", aiResponse);
       throw new Error("Failed to parse OpenAI response as JSON");
     }
-
-    console.log("Parsed data:", parsedData);
+    
     res.json(parsedData);
   } catch (error) {
     console.error("Error in /api/parse:", error.message);
