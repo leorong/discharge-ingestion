@@ -7,7 +7,7 @@ This project automates the ingestion of hospital discharge lists (PDF format) in
 ## 🚀 Approach & Features (Q1)
 
 - **PDF Parsing**: Extracts patient discharge details from PDF files to text using pdf-parser library
-- **AI-Powered Data Structuring**: Uses OpenAI to convert extracted text into structured JSON (Included a batching logic to split large PDF files into multiple batches to provent OpenAI response timeout).
+- **AI-Powered Data Structuring**: Uses OpenAI to convert extracted text into structured JSON (Included a batching logic to split large PDF files into multiple batches to prevent OpenAI response timeout).
 - **Review & Editing**: Allows manual review and correction of patient details in a web UI
 - **Phone Number Validation**: Integrates with Twilio API to verify & format phone numbers
 - **Database Storage**: Saves parsed discharge data into Supabase (SQL database) for fetching
