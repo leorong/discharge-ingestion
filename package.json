@@ -14,7 +14,9 @@
     "twilio": "^5.4.3"
   },
   "scripts": {
-    "start": "concurrently \"yarn server\" \"yarn client\"",
+    "start": "yarn build && yarn server",
+    "build": "yarn workspace client build",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
     "server": "node server/index.js",
     "client": "yarn --cwd client start"
   },

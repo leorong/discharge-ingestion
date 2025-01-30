@@ -107,30 +107,3 @@ table th:hover {
 table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-
-/* Pagination */
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-}
-
-.pagination button {
-  background: #28a745;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  margin: 0 5px;
-}
-
-.pagination button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-.pagination span {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0 10px;
-}

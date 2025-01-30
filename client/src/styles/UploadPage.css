@@ -24,6 +24,16 @@
   text-align: center;
 }
 
+.error {
+  color: #d32f2f; /* Material Red */
+  background-color: #fdecea;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #d32f2f;
+}
+
 button {
   background: #28a745;
   color: white;

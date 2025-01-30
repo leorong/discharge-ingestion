@@ -3,6 +3,7 @@ const multer = require("multer");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const pdfParse = require("pdf-parse");
+const path = require("path");
 const { createClient } = require("@supabase/supabase-js");
 const twilio = require("twilio");
 const { OpenAI } = require("openai");
@@ -11,6 +12,8 @@ require("dotenv").config();
 
 const app = express();
 const upload = multer();
+const PORT = process.env.PORT || 5000;
+
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 const openai = new OpenAI({
@@ -151,5 +154,14 @@ app.get("/api/discharges", async (req, res) => {
   }
 });
 
+// Serve React Frontend in Production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
 
-app.listen(5000, () => console.log("Server running on port 5000"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  });
+}
+
+// Start Server
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

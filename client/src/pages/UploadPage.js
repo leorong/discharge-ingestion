@@ -12,6 +12,7 @@ export default function UploadPage() {
   const handleFileUpload = async (event) => {
     const uploadedFile = event.target.files[0];
     setIsLoading(true);
+    setError(null);
 
     try {
       const data = await parsePDF(uploadedFile);
@@ -30,6 +31,8 @@ export default function UploadPage() {
   };
 
   const verifyPhoneNumber = async (index) => {
+    setError(null);
+
     const phone_number = parsedData[index].phone_number;
     try {
       const result = await verifyPhoneNumberAPI(phone_number);
@@ -46,6 +49,7 @@ export default function UploadPage() {
 
   const saveData = async () => {
     if (!parsedData) return;
+    setError(null);
     setIsLoading(true);
 
     try {
@@ -83,7 +87,7 @@ export default function UploadPage() {
       </section>
 
       {/* Parsed Data Review Section */}
-      {parsedData && parsedData.length > 0 && !isLoading && !error && (
+      {parsedData && parsedData.length > 0 && !isLoading && (
         <section className="review-container">
           <h2>Review and Edit Parsed Data</h2>
           <button onClick={saveData}>Save to Database</button>
