@@ -1,0 +1,91 @@
+.header h1 {
+  color: #333;
+}
+
+.header p {
+  font-size: 16px;
+  color: #555;
+}
+
+.discharges-container {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.discharges-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.discharges-table th, .discharges-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.discharges-table th {
+  cursor: pointer;
+}
+
+.discharges-table th:hover {
+  background-color: #ddd;
+}
+
+/* Pagination container */
+.pagination {
+  display: flex;
+  flex-direction: column; /* Stack items per page selector above page controls */
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Items per page selector */
+.pagination .items-per-page {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Page navigation buttons */
+.pagination .page-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.pagination button:hover {
+  background: #0056b3;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Page number display */
+.pagination span {
+  font-size: 16px;
+  font-weight: bold;
+}
