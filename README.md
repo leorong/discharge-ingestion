@@ -1,5 +1,7 @@
 # Discharge Ingestion System
 
+## Live Deployment Link: https://discharge-ingestion-production.up.railway.app/
+
 This project automates the ingestion of hospital discharge lists (PDF format) into a structured database for triggering patient outreach campaigns.
 
 ## 🚀 Approach & Features (Q1)
