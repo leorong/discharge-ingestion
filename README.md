@@ -48,10 +48,17 @@ git clone https://github.com/leorong/discharge-ingestion.git
 cd discharge-ingestion
 ```
 
-### 2️⃣ Install Dependencies
+### 2️⃣ Install Dependencies & Set Up .env
 
 ```sh
 yarn install && yarn install --cwd client
+```
+```sh
+SUPABASE_URL=YOUR_SUPABASE_URL
+SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY  
+TWILIO_ACCOUNT_SID=YOUR_TWILIO_ACCOUNT_SID
+TWILIO_AUTH_TOKEN=YOUR_TWILIO_AUTH_TOKEN
+OPENAI_API_KEY=YOUR_OPENAI_API_KEY
 ```
 
 ### 3️⃣ Run Locally
