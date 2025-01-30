@@ -16,7 +16,12 @@ export default function UploadPage() {
 
     try {
       const data = await parsePDF(uploadedFile);
-      setParsedData(data);
+      if(data.error) {
+        console.log(data.error);
+        setError(data.error);
+      } else {
+        setParsedData(data);
+      }
     } catch (error) {
       setError(error.error || "Failed to process PDF");
     } finally {
@@ -43,7 +48,7 @@ export default function UploadPage() {
         alert("Invalid phone number");
       }
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
 
@@ -57,7 +62,7 @@ export default function UploadPage() {
       setParsedData(null);
       alert("Data saved successfully!");
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +88,7 @@ export default function UploadPage() {
         <input type="file" accept=".pdf" onChange={handleFileUpload} />
         {isLoading && <p>Processing file...</p>}
         {!isLoading && parsedData && parsedData.length === 0 && <p>No data found in the PDF.</p>}
-        {error && <p className="error">{error.message}</p>}
+        {error && <p className="error">{error}</p>}
       </section>
 
       {/* Parsed Data Review Section */}

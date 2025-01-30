@@ -42,58 +42,73 @@ app.post("/api/parse", upload.single("file"), async (req, res) => {
     const pdfData = await pdfParse(pdfBuffer);
     const pdfText = pdfData.text.trim();
 
-    // Send extracted text to OpenAI
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: "You extract structured data from text and return ONLY valid JSON. No explanations, no additional text."
-        },
-        {
-          role: "user",
-          content: `
+    // Split PDF text into individual lines
+    const lines = pdfText.split("\n").map(line => line.trim()).filter(line => line !== "");
+
+    // Define batch size (e.g., 10 lines per batch)
+    const batchSize = 10;
+    const batches = [];
+
+    for (let i = 0; i < lines.length; i += batchSize) {
+      batches.push(lines.slice(i, i + batchSize).join("\n"));
+    }
+
+    console.log(`Processing ${batches.length} batches`);
+
+    let allParsedData = [];
+
+    // Process each batch separately
+    for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
+      const batch = batches[batchIndex];
+
+      console.log(`Processing batch ${batchIndex + 1}/${batches.length}`);
+
+      // Send extracted text to OpenAI
+      const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: "You extract structured data from text and return ONLY valid JSON. No explanations, no additional text."
+          },
+          {
+            role: "user",
+            content: `
             Extract the following fields from the provided text:
             ${requiredFields.join(", ")}
             
             PDF Content:
-            """${pdfText}"""
+            """${batch}"""
 
             Return the data as a JSON array of objects.
             Respond ONLY with valid JSON. Do not include any explanations or additional text.
           `
-        }
-      ],
-      max_tokens: 500
-    });
-
-    // Validate OpenAI response
-    let aiResponse = response.choices?.[0]?.message?.content?.trim();
-    if (!aiResponse) {
-      throw new Error("No valid response from OpenAI");
-    }
-
-    // Remove Markdown-style backticks if present
-    aiResponse = aiResponse.replace(/^```json\s*|```$/g, "").trim();
-
-    // Parse response as JSON
-    let parsedData;
-    try {
-      parsedData = JSON.parse(aiResponse);
-      parsedData = parsedData.map(entry => {
-        requiredFields.forEach(field => {
-          if (!(field in entry)) {
-            entry[field] = ""; // Set missing field to an empty string
           }
-        });
-        return entry;
+        ],
+        max_tokens: 1500
       });
-    } catch (error) {
-      console.error("Failed to parse JSON. OpenAI Response:", aiResponse);
-      throw new Error("Failed to parse OpenAI response as JSON");
+
+      // Validate OpenAI response
+      let aiResponse = response.choices?.[0]?.message?.content?.trim();
+      if (!aiResponse) {
+        throw new Error("No valid response from OpenAI");
+      }
+
+      // Remove Markdown-style backticks if present
+      aiResponse = aiResponse.replace(/^```json\s*|```$/g, "").trim();
+
+      console.log(`Batch ${batchIndex + 1} Response:`, aiResponse);
+
+      // Parse response as JSON
+      let parsedData;
+      try {
+        parsedData = JSON.parse(aiResponse);
+        allParsedData.push(...parsedData);
+      } catch (error) {
+        throw new Error("Failed to parse OpenAI response as JSON");
+      }
     }
-    
-    res.json(parsedData);
+    res.json(allParsedData);
   } catch (error) {
     console.error("Error in /api/parse:", error.message);
     res.status(500).json({ error: error.message });
