@@ -12,7 +12,7 @@ export const parsePDF = async (file) => {
 };
 
 export const verifyPhoneNumberAPI = async (phone_number) => {
-  const response = await fetch("http://localhost:5000/api/verify-phone", {
+  const response = await fetch(`${API_URL}/verify-phone`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ phone_number }),
